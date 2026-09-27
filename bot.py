@@ -31,7 +31,9 @@ def main():
     if not token:
         raise ValueError("Не найден BOT_TOKEN")
 
-    threading.Thread(target=run_web_server, daemon=True).start()
+    print("Запускаю веб-сервер...")
+threading.Thread(target=run_web_server, daemon=True).start()
+print("Веб-сервер запущен!")
 
     app = Application.builder().token(token).build()
 
