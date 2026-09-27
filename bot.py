@@ -1,25 +1,74 @@
 import os
 import threading
 from flask import Flask
-from telegram import Update
-from telegram.ext import Application, CommandHandler, ContextTypes
+from telegram import Update, ReplyKeyboardMarkup
+from telegram.ext import (
+    Application,
+    CommandHandler,
+    MessageHandler,
+    ContextTypes,
+    filters
+)
 
 web_app = Flask(__name__)
+
 
 @web_app.route("/")
 def home():
     return "Telegram bot is running!"
 
+
 def run_web_server():
     port = int(os.environ.get("PORT", 10000))
     web_app.run(host="0.0.0.0", port=port)
 
+
 async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    keyboard = [
+        ["🛍 Каталог", "📦 Мои заказы"],
+        ["🛒 Корзина", "📞 Связаться с нами"]
+    ]
+
+    reply_markup = ReplyKeyboardMarkup(
+        keyboard,
+        resize_keyboard=True
+    )
+
     await update.message.reply_text(
         "👋 Привет!\n\n"
-        "Добро пожаловать в наш магазин 🛍️\n"
-        "Скоро здесь появятся товары!"
+        "Добро пожаловать в наш магазин 🛍️\n\n"
+        "Выберите нужный раздел 👇",
+        reply_markup=reply_markup
     )
+
+
+async def catalog(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    await update.message.reply_text(
+        "🛍 Каталог\n\n"
+        "Здесь скоро появятся наши товары."
+    )
+
+
+async def orders(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    await update.message.reply_text(
+        "📦 Мои заказы\n\n"
+        "Здесь будут отображаться ваши заказы."
+    )
+
+
+async def cart(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    await update.message.reply_text(
+        "🛒 Корзина\n\n"
+        "Ваша корзина пока пуста."
+    )
+
+
+async def contact(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    await update.message.reply_text(
+        "📞 Связаться с нами\n\n"
+        "Напишите нам, и мы обязательно ответим!"
+    )
+
 
 def main():
     token = os.getenv("BOT_TOKEN")
@@ -28,6 +77,7 @@ def main():
         raise ValueError("Не найден BOT_TOKEN")
 
     print("Запускаю веб-сервер...")
+
     web_thread = threading.Thread(
         target=run_web_server,
         daemon=True
@@ -37,10 +87,40 @@ def main():
     print("Веб-сервер запущен!")
 
     app = Application.builder().token(token).build()
+
     app.add_handler(CommandHandler("start", start))
+
+    app.add_handler(
+        MessageHandler(
+            filters.TEXT & filters.Regex("^🛍 Каталог$"),
+            catalog
+        )
+    )
+
+    app.add_handler(
+        MessageHandler(
+            filters.TEXT & filters.Regex("^📦 Мои заказы$"),
+            orders
+        )
+    )
+
+    app.add_handler(
+        MessageHandler(
+            filters.TEXT & filters.Regex("^🛒 Корзина$"),
+            cart
+        )
+    )
+
+    app.add_handler(
+        MessageHandler(
+            filters.TEXT & filters.Regex("^📞 Связаться с нами$"),
+            contact
+        )
+    )
 
     print("Бот запущен...")
     app.run_polling()
+
 
 if __name__ == "__main__":
     main()
