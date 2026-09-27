@@ -43,9 +43,34 @@ async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
 
 async def catalog(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    keyboard = [
+        ["🎀 Ленты", "📿 Бусы"],
+        ["🔙 Назад"]
+    ]
+
+    reply_markup = ReplyKeyboardMarkup(
+        keyboard,
+        resize_keyboard=True
+    )
+
     await update.message.reply_text(
         "🛍 Каталог\n\n"
-        "Здесь скоро появятся наши товары."
+        "Выберите категорию:",
+        reply_markup=reply_markup
+    )
+
+
+async def ribbons(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    await update.message.reply_text(
+        "🎀 Ленты\n\n"
+        "Здесь будут разные виды лент."
+    )
+
+
+async def beads(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    await update.message.reply_text(
+        "📿 Бусы\n\n"
+        "Здесь будут разные виды бус."
     )
 
 
@@ -68,6 +93,10 @@ async def contact(update: Update, context: ContextTypes.DEFAULT_TYPE):
         "📞 Связаться с нами\n\n"
         "Напишите нам, и мы обязательно ответим!"
     )
+
+
+async def back(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    await start(update, context)
 
 
 def main():
@@ -99,6 +128,20 @@ def main():
 
     app.add_handler(
         MessageHandler(
+            filters.TEXT & filters.Regex("^🎀 Ленты$"),
+            ribbons
+        )
+    )
+
+    app.add_handler(
+        MessageHandler(
+            filters.TEXT & filters.Regex("^📿 Бусы$"),
+            beads
+        )
+    )
+
+    app.add_handler(
+        MessageHandler(
             filters.TEXT & filters.Regex("^📦 Мои заказы$"),
             orders
         )
@@ -115,6 +158,13 @@ def main():
         MessageHandler(
             filters.TEXT & filters.Regex("^📞 Связаться с нами$"),
             contact
+        )
+    )
+
+    app.add_handler(
+        MessageHandler(
+            filters.TEXT & filters.Regex("^🔙 Назад$"),
+            back
         )
     )
 
