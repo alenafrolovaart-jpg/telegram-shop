@@ -25,7 +25,7 @@ def run_web_server():
 
 async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
     keyboard = [
-        ["Витрина"]
+        ["✅Открыть витрину"]
     ]
 
     reply_markup = ReplyKeyboardMarkup(
