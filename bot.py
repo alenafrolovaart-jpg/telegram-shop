@@ -34,16 +34,14 @@ async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
     )
 
     await update.message.reply_text(
-        "👋 Привет!\n\n"
-        "Добро пожаловать в наш магазин 🛍️\n\n"
-        "Выберите нужный раздел 👇",
+        "Добро пожаловать🫶🏼\n\n",
         reply_markup=reply_markup
     )
 
 
 async def catalog(update: Update, context: ContextTypes.DEFAULT_TYPE):
     keyboard = [
-        ["Витрина"],
+        ["✅Открыть витрину"],
         ["🔙 Назад"]
     ]
 
