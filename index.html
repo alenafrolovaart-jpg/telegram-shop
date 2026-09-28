@@ -4,179 +4,1438 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>ДОФАМИН - всё для декора</title>
+<title>ДОФАМИН — всё для декора</title>
 
 <style>
+* {
+    box-sizing: border-box;
+}
+
 body {
     font-family: Arial, sans-serif;
     background: #fff7fb;
     margin: 0;
-    padding: 20px;
+    padding: 16px;
+    color: #333;
 }
 
 h1 {
     text-align: center;
+    font-size: 26px;
+    margin: 10px 0 20px;
 }
 
-.category, .product {
+h2 {
+    text-align: center;
+    margin: 10px 0 20px;
+}
+
+.card {
     background: white;
     padding: 18px;
-    margin: 15px 0;
+    margin: 12px 0;
     border-radius: 20px;
-    font-size: 18px;
-    box-shadow: 0 3px 10px rgba(0,0,0,0.08);
+    box-shadow: 0 3px 12px rgba(0,0,0,0.08);
 }
 
 .category {
-    font-size: 22px;
+    font-size: 20px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.product {
+    position: relative;
+}
+
+.photo {
+    height: 180px;
+    background: #f7f7f7;
+    border-radius: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #aaa;
+    font-size: 17px;
+    margin-bottom: 14px;
+}
+
+.product-name {
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.info {
+    line-height: 1.7;
+    color: #555;
+}
+
+.price {
+    font-size: 20px;
+    font-weight: bold;
+    color: #d65386;
+    margin: 10px 0;
 }
 
 button {
     background: #ff7aa8;
     color: white;
     border: none;
-    padding: 12px 20px;
+    padding: 11px 16px;
     border-radius: 20px;
     font-size: 16px;
+    cursor: pointer;
+    margin: 4px;
+}
+
+button:active {
+    transform: scale(0.97);
+}
+
+.back-button {
+    background: #777;
+}
+
+.cart-button {
+    background: #333;
+}
+
+.quantity {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+.quantity button {
+    width: 40px;
+    padding: 8px;
+}
+
+.empty {
+    text-align: center;
+    padding: 30px 10px;
+    color: #777;
+}
+
+.total {
+    font-size: 22px;
+    font-weight: bold;
+    text-align: center;
+    margin: 20px 0;
+}
+
+.small {
+    color: #888;
+    font-size: 14px;
 }
 </style>
-
 </head>
 
 <body>
 
-<h1>🛍 ДОФАМИН<br>всё для декора</h1>
-
-
-<div class="category" onclick="openRibbons()">
-🎀 Ленты
-</div>
-
-
-<div class="category">
-📿 Бусы
-</div>
-
-
-<div class="product">
-📿 Декоративные бусы<br>
-Разные виды и цвета
-</div>
-
-
+<div id="app"></div>
 
 <script>
 
-function openRibbons() {
+const products = [
 
-document.body.innerHTML = `
+/* =========================
+   АТЛАСНЫЕ ЛЕНТЫ
+========================= */
 
-<h1>🎀 Ленты</h1>
+{
+    id: "atlas-blue",
+    category: "Атласные ленты",
+    name: "Голубая атласная лента",
+    width: "1 см",
+    length: "320 м",
+    price: 0
+},
+{
+    id: "atlas-gray",
+    category: "Атласные ленты",
+    name: "Серая атласная лента",
+    width: "1 см",
+    length: "320 м",
+    price: 0
+},
+{
+    id: "atlas-gold",
+    category: "Атласные ленты",
+    name: "Золотая атласная лента",
+    width: "1 см",
+    length: "320 м",
+    price: 0
+},
+{
+    id: "atlas-cream",
+    category: "Атласные ленты",
+    name: "Кремовая атласная лента",
+    width: "1 см",
+    length: "320 м",
+    price: 0
+},
+{
+    id: "atlas-pink",
+    category: "Атласные ленты",
+    name: "Розовая атласная лента",
+    width: "1 см",
+    length: "320 м",
+    price: 0
+},
+{
+    id: "atlas-white",
+    category: "Атласные ленты",
+    name: "Белая атласная лента",
+    width: "1 см",
+    length: "320 м",
+    price: 0
+},
+{
+    id: "atlas-black",
+    category: "Атласные ленты",
+    name: "Чёрная атласная лента",
+    width: "1 см",
+    length: "320 м",
+    price: 0
+},
+{
+    id: "atlas-burgundy",
+    category: "Атласные ленты",
+    name: "Бордовая атласная лента",
+    width: "1 см",
+    length: "320 м",
+    price: 0
+},
+
+/* =========================
+   ОРГАНЗА ВОЛНА
+========================= */
+
+{
+    id: "organza-wave-white",
+    category: "Органза «Волна»",
+    name: "Белая",
+    width: "3,5 см",
+    length: "27 м",
+    price: 250
+},
+{
+    id: "organza-wave-black",
+    category: "Органза «Волна»",
+    name: "Чёрная",
+    width: "3,5 см",
+    length: "27 м",
+    price: 250
+},
+{
+    id: "organza-wave-peach",
+    category: "Органза «Волна»",
+    name: "Пудровая (персиковая)",
+    width: "3,5 см",
+    length: "27 м",
+    price: 250
+},
+{
+    id: "organza-wave-lightpink",
+    category: "Органза «Волна»",
+    name: "Нежно-розовая",
+    width: "3,5 см",
+    length: "27 м",
+    price: 250
+},
+{
+    id: "organza-wave-pink",
+    category: "Органза «Волна»",
+    name: "Розовая",
+    width: "3,5 см",
+    length: "27 м",
+    price: 250
+},
+{
+    id: "organza-wave-burgundy",
+    category: "Органза «Волна»",
+    name: "Бордовая",
+    width: "3,5 см",
+    length: "27 м",
+    price: 250
+},
+{
+    id: "organza-wave-blue",
+    category: "Органза «Волна»",
+    name: "Голубая",
+    width: "3,5 см",
+    length: "27 м",
+    price: 250
+},
+{
+    id: "organza-wave-beige",
+    category: "Органза «Волна»",
+    name: "Бежевая",
+    width: "3,5 см",
+    length: "27 м",
+    price: 250
+},
+{
+    id: "organza-wave-cream",
+    category: "Органза «Волна»",
+    name: "Кремовая",
+    width: "3,5 см",
+    length: "27 м",
+    price: 250
+},
+{
+    id: "organza-wave-lavender",
+    category: "Органза «Волна»",
+    name: "Лавандовая",
+    width: "3,5 см",
+    length: "27 м",
+    price: 250
+},
+{
+    id: "organza-wave-red",
+    category: "Органза «Волна»",
+    name: "Красная",
+    width: "3,5 см",
+    length: "27 м",
+    price: 250
+},
+
+/* =========================
+   ОРГАНЗА 1 СМ
+========================= */
+
+{
+    id: "organza1-white",
+    category: "Органза 1 см",
+    name: "Белая",
+    width: "1 см",
+    length: "457 м",
+    price: 580
+},
+{
+    id: "organza1-yellow",
+    category: "Органза 1 см",
+    name: "Нежно-жёлтая",
+    width: "1 см",
+    length: "457 м",
+    price: 580
+},
+{
+    id: "organza1-pink",
+    category: "Органза 1 см",
+    name: "Розовая",
+    width: "1 см",
+    length: "457 м",
+    price: 580
+},
+{
+    id: "organza1-lightpink",
+    category: "Органза 1 см",
+    name: "Нежно-розовая",
+    width: "1 см",
+    length: "457 м",
+    price: 580
+},
+{
+    id: "organza1-black",
+    category: "Органза 1 см",
+    name: "Чёрная",
+    width: "1 см",
+    length: "457 м",
+    price: 580
+},
+{
+    id: "organza1-lilac",
+    category: "Органза 1 см",
+    name: "Сиреневая",
+    width: "1 см",
+    length: "457 м",
+    price: 580
+},
+{
+    id: "organza1-green",
+    category: "Органза 1 см",
+    name: "Зелёная",
+    width: "1 см",
+    length: "457 м",
+    price: 580
+},
+{
+    id: "organza1-blue",
+    category: "Органза 1 см",
+    name: "Голубая",
+    width: "1 см",
+    length: "457 м",
+    price: 580
+},
+{
+    id: "organza1-red",
+    category: "Органза 1 см",
+    name: "Красная",
+    width: "1 см",
+    length: "457 м",
+    price: 580
+},
+
+/* =========================
+   ТКАНЕВАЯ ВОЛНА 37 М
+========================= */
+
+{
+    id: "fabric37-lavender",
+    category: "Лента «Волна» тканевая 37 м",
+    name: "Лаванда",
+    width: "2,5 см",
+    length: "37 м",
+    price: 380
+},
+{
+    id: "fabric37-beige",
+    category: "Лента «Волна» тканевая 37 м",
+    name: "Бежевая",
+    width: "2,5 см",
+    length: "37 м",
+    price: 380
+},
+{
+    id: "fabric37-olive",
+    category: "Лента «Волна» тканевая 37 м",
+    name: "Оливковая",
+    width: "2,5 см",
+    length: "37 м",
+    price: 380
+},
+{
+    id: "fabric37-cream",
+    category: "Лента «Волна» тканевая 37 м",
+    name: "Кремовая",
+    width: "2,5 см",
+    length: "37 м",
+    price: 380
+},
+{
+    id: "fabric37-yellow",
+    category: "Лента «Волна» тканевая 37 м",
+    name: "Нежно-жёлтая",
+    width: "2,5 см",
+    length: "37 м",
+    price: 380
+},
+{
+    id: "fabric37-darkbeige",
+    category: "Лента «Волна» тканевая 37 м",
+    name: "Бежевая тёмная",
+    width: "2,5 см",
+    length: "37 м",
+    price: 380
+},
+{
+    id: "fabric37-pink",
+    category: "Лента «Волна» тканевая 37 м",
+    name: "Розовая",
+    width: "2,5 см",
+    length: "37 м",
+    price: 380
+},
+{
+    id: "fabric37-blue",
+    category: "Лента «Волна» тканевая 37 м",
+    name: "Голубая",
+    width: "2,5 см",
+    length: "37 м",
+    price: 380
+},
+{
+    id: "fabric37-burgundy",
+    category: "Лента «Волна» тканевая 37 м",
+    name: "Бордовая",
+    width: "2,5 см",
+    length: "37 м",
+    price: 380
+},
+{
+    id: "fabric37-black",
+    category: "Лента «Волна» тканевая 37 м",
+    name: "Чёрная",
+    width: "2,5 см",
+    length: "37 м",
+    price: 380
+},
+{
+    id: "fabric37-white",
+    category: "Лента «Волна» тканевая 37 м",
+    name: "Белая",
+    width: "2,5 см",
+    length: "37 м",
+    price: 380
+},
+
+/* =========================
+   ХАМЕЛЕОН 45 М
+========================= */
+
+{
+    id: "chameleon45-pink",
+    category: "Органза «Волна» хамелеон 45 м",
+    name: "Розовая",
+    width: "3,5 см",
+    length: "45 м",
+    price: 450
+},
+{
+    id: "chameleon45-purple",
+    category: "Органза «Волна» хамелеон 45 м",
+    name: "Фиолетовая",
+    width: "3,5 см",
+    length: "45 м",
+    price: 450
+},
+{
+    id: "chameleon45-blue",
+    category: "Органза «Волна» хамелеон 45 м",
+    name: "Голубая",
+    width: "3,5 см",
+    length: "45 м",
+    price: 450
+},
+{
+    id: "chameleon45-peach",
+    category: "Органза «Волна» хамелеон 45 м",
+    name: "Персиковая",
+    width: "3,5 см",
+    length: "45 м",
+    price: 450
+},
+
+/* =========================
+   ХАМЕЛЕОН 9 М
+========================= */
+
+{
+    id: "chameleon9-white",
+    category: "Органза «Волна» хамелеон 9 м",
+    name: "Белая",
+    width: "3,5 см",
+    length: "9 м",
+    price: 140
+},
+{
+    id: "chameleon9-cream",
+    category: "Органза «Волна» хамелеон 9 м",
+    name: "Кремовая",
+    width: "3,5 см",
+    length: "9 м",
+    price: 140
+},
+{
+    id: "chameleon9-peach",
+    category: "Органза «Волна» хамелеон 9 м",
+    name: "Персиковая",
+    width: "3,5 см",
+    length: "9 м",
+    price: 140
+},
+{
+    id: "chameleon9-pink",
+    category: "Органза «Волна» хамелеон 9 м",
+    name: "Розовая",
+    width: "3,5 см",
+    length: "9 м",
+    price: 140
+},
+{
+    id: "chameleon9-lightpink",
+    category: "Органза «Волна» хамелеон 9 м",
+    name: "Нежно-розовая",
+    width: "3,5 см",
+    length: "9 м",
+    price: 140
+},
+{
+    id: "chameleon9-purple",
+    category: "Органза «Волна» хамелеон 9 м",
+    name: "Фиолетовая",
+    width: "3,5 см",
+    length: "9 м",
+    price: 140
+},
+{
+    id: "chameleon9-blue",
+    category: "Органза «Волна» хамелеон 9 м",
+    name: "Голубая",
+    width: "3,5 см",
+    length: "9 м",
+    price: 140
+},
+{
+    id: "chameleon9-darkgreen",
+    category: "Органза «Волна» хамелеон 9 м",
+    name: "Тёмно-зелёная",
+    width: "3,5 см",
+    length: "9 м",
+    price: 140
+},
+{
+    id: "chameleon9-lightgreen",
+    category: "Органза «Волна» хамелеон 9 м",
+    name: "Светло-зелёная",
+    width: "3,5 см",
+    length: "9 м",
+    price: 140
+},
+
+/* =========================
+   СТРАЗЫ
+========================= */
+
+{
+    id: "rhinestones-white",
+    category: "Лента со стразами",
+    name: "Белая",
+    width: "4 см",
+    length: "5 м",
+    price: 150
+},
+{
+    id: "rhinestones-pink",
+    category: "Лента со стразами",
+    name: "Розовая",
+    width: "4 см",
+    length: "5 м",
+    price: 150
+},
+
+/* =========================
+   ГОРОШЕК
+========================= */
+
+{
+    id: "dots-black",
+    category: "Лента в горошек",
+    name: "Чёрная",
+    width: "4 см",
+    length: "9 м",
+    price: 220
+},
+{
+    id: "dots-dustypink",
+    category: "Лента в горошек",
+    name: "Пыльно-розовая",
+    width: "4 см",
+    length: "9 м",
+    price: 220
+},
+{
+    id: "dots-white",
+    category: "Лента в горошек",
+    name: "Белая",
+    width: "4 см",
+    length: "9 м",
+    price: 220
+},
+{
+    id: "dots-blue",
+    category: "Лента в горошек",
+    name: "Голубая",
+    width: "4 см",
+    length: "9 м",
+    price: 220
+},
+
+/* =========================
+   ШИФОН
+========================= */
+
+{
+    id: "chiffon-blue",
+    category: "Шифоновая лента",
+    name: "Голубая",
+    width: "4 см",
+    length: "5 м",
+    price: 120
+},
+{
+    id: "chiffon-beige",
+    category: "Шифоновая лента",
+    name: "Бежевая",
+    width: "4 см",
+    length: "5 м",
+    price: 120
+},
+{
+    id: "chiffon-olive",
+    category: "Шифоновая лента",
+    name: "Оливковая",
+    width: "4 см",
+    length: "5 м",
+    price: 120
+},
+{
+    id: "chiffon-dustypink",
+    category: "Шифоновая лента",
+    name: "Пыльно-розовая",
+    width: "4 см",
+    length: "5 м",
+    price: 120
+},
+{
+    id: "chiffon-lightpink",
+    category: "Шифоновая лента",
+    name: "Нежно-розовая",
+    width: "4 см",
+    length: "5 м",
+    price: 120
+},
+{
+    id: "chiffon-pink",
+    category: "Шифоновая лента",
+    name: "Розовая",
+    width: "4 см",
+    length: "5 м",
+    price: 120
+},
+{
+    id: "chiffon-white",
+    category: "Шифоновая лента",
+    name: "Белая",
+    width: "4 см",
+    length: "5 м",
+    price: 120
+},
+{
+    id: "chiffon-cream",
+    category: "Шифоновая лента",
+    name: "Кремовая",
+    width: "4 см",
+    length: "5 м",
+    price: 120
+},
+{
+    id: "chiffon-lightrose",
+    category: "Шифоновая лента",
+    name: "Светлая пыльная роза",
+    width: "4 см",
+    length: "5 м",
+    price: 120
+},
+{
+    id: "chiffon-burgundy",
+    category: "Шифоновая лента",
+    name: "Бордовая",
+    width: "4 см",
+    length: "5 м",
+    price: 120
+},
+
+/* =========================
+   ТОЧКИ
+========================= */
+
+{
+    id: "dots2-dustypink",
+    category: "Ленты с точками",
+    name: "Пыльно-розовая",
+    width: "2,5 см",
+    length: "9 м",
+    price: 160
+},
+{
+    id: "dots2-beige",
+    category: "Ленты с точками",
+    name: "Бежевая",
+    width: "2,5 см",
+    length: "9 м",
+    price: 160
+},
+{
+    id: "dots2-cream",
+    category: "Ленты с точками",
+    name: "Кремовая",
+    width: "2,5 см",
+    length: "9 м",
+    price: 160
+},
+{
+    id: "dots2-lilac",
+    category: "Ленты с точками",
+    name: "Сиреневая",
+    width: "2,5 см",
+    length: "9 м",
+    price: 160
+},
+{
+    id: "dots2-white",
+    category: "Ленты с точками",
+    name: "Белая",
+    width: "2,5 см",
+    length: "9 м",
+    price: 160
+},
+{
+    id: "dots2-pink",
+    category: "Ленты с точками",
+    name: "Розовая",
+    width: "2,5 см",
+    length: "9 м",
+    price: 160
+},
+{
+    id: "dots2-lightblue",
+    category: "Ленты с точками",
+    name: "Нежно-голубая",
+    width: "2,5 см",
+    length: "9 м",
+    price: 160
+},
+{
+    id: "dots2-mint",
+    category: "Ленты с точками",
+    name: "Мятная",
+    width: "2,5 см",
+    length: "9 м",
+    price: 160
+},
+{
+    id: "dots2-burgundy",
+    category: "Ленты с точками",
+    name: "Бордовая",
+    width: "2,5 см",
+    length: "9 м",
+    price: 160
+},
+{
+    id: "dots2-blue",
+    category: "Ленты с точками",
+    name: "Голубая",
+    width: "2,5 см",
+    length: "9 м",
+    price: 160
+},
+{
+    id: "dots2-black",
+    category: "Ленты с точками",
+    name: "Чёрная",
+    width: "2,5 см",
+    length: "9 м",
+    price: 160
+},
+
+/* =========================
+   ТКАНЕВАЯ ВОЛНА 9 М
+========================= */
+
+{
+    id: "fabric9-fuchsia",
+    category: "Лента тканевая «Волна» 9 м",
+    name: "Фуксия",
+    width: "2,5 см",
+    length: "9 м",
+    price: 120
+},
+{
+    id: "fabric9-yellow",
+    category: "Лента тканевая «Волна» 9 м",
+    name: "Нежно-жёлтая",
+    width: "2,5 см",
+    length: "9 м",
+    price: 120
+},
+{
+    id: "fabric9-olive",
+    category: "Лента тканевая «Волна» 9 м",
+    name: "Оливковая",
+    width: "2,5 см",
+    length: "9 м",
+    price: 120
+},
+{
+    id: "fabric9-mint",
+    category: "Лента тканевая «Волна» 9 м",
+    name: "Мятная",
+    width: "2,5 см",
+    length: "9 м",
+    price: 120
+},
+{
+    id: "fabric9-lilac",
+    category: "Лента тканевая «Волна» 9 м",
+    name: "Сиреневая",
+    width: "2,5 см",
+    length: "9 м",
+    price: 120
+},
+
+/* =========================
+   ЛЕНТЫ С РИСУНКОМ
+========================= */
+
+{
+    id: "pattern-goldwhite",
+    category: "Ленты с рисунком",
+    name: "Белая с золотыми точками",
+    width: "4 см",
+    length: "5 м",
+    price: 170
+},
+{
+    id: "pattern-goldblue",
+    category: "Ленты с рисунком",
+    name: "Голубая с золотыми точками",
+    width: "4 см",
+    length: "5 м",
+    price: 170
+},
+{
+    id: "pattern-stars-pink",
+    category: "Ленты с рисунком",
+    name: "Нежно-розовая со звёздами",
+    width: "4 см",
+    length: "5 м",
+    price: 170
+},
+{
+    id: "pattern-stars-dusty",
+    category: "Ленты с рисунком",
+    name: "Пыльно-розовая со звёздами",
+    width: "4 см",
+    length: "5 м",
+    price: 170
+},
+{
+    id: "pattern-circles-pink",
+    category: "Ленты с рисунком",
+    name: "Нежно-розовая с золотыми кругами",
+    width: "4 см",
+    length: "5 м",
+    price: 170
+},
+{
+    id: "pattern-circles-blue",
+    category: "Ленты с рисунком",
+    name: "Тёмно-синяя с золотыми кругами",
+    width: "4 см",
+    length: "5 м",
+    price: 170
+},
+
+/* =========================
+   КРУЖЕВО
+========================= */
+
+{
+    id: "lace-beige",
+    category: "Кружево",
+    name: "Бежевая",
+    width: "4,5 см",
+    length: "22 м",
+    price: 190
+},
+{
+    id: "lace-pink",
+    category: "Кружево",
+    name: "Розовая",
+    width: "4,5 см",
+    length: "22 м",
+    price: 190
+},
+{
+    id: "lace-lightpink",
+    category: "Кружево",
+    name: "Нежно-розовая",
+    width: "4,5 см",
+    length: "22 м",
+    price: 190
+},
+{
+    id: "lace-white",
+    category: "Кружево",
+    name: "Белая",
+    width: "4,5 см",
+    length: "22 м",
+    price: 190
+},
+{
+    id: "lace-dustyrose",
+    category: "Кружево",
+    name: "Пыльная роза",
+    width: "4,5 см",
+    length: "22 м",
+    price: 190
+},
+
+/* =========================
+   ЦВЕТОЧНАЯ
+========================= */
+
+{
+    id: "flower-small",
+    category: "Лента цветочная",
+    name: "Кремовая с мелкими чёрными цветами",
+    width: "3,8 см",
+    length: "9 м",
+    price: 190
+},
+{
+    id: "flower-large",
+    category: "Лента цветочная",
+    name: "Кремовая с крупными чёрными цветами",
+    width: "3,8 см",
+    length: "9 м",
+    price: 190
+},
+
+/* =========================
+   БУСЫ
+========================= */
+
+{
+    id: "beads-clear-circles",
+    category: "Бусы — прозрачные",
+    name: "Прозрачные кружочки",
+    width: "",
+    length: "5 м",
+    price: 170
+},
+{
+    id: "beads-clear-diamonds",
+    category: "Бусы — прозрачные",
+    name: "Прозрачные ромбы",
+    width: "",
+    length: "5 м",
+    price: 170
+},
+{
+    id: "beads-chameleon-diamonds",
+    category: "Бусы — хамелеон",
+    name: "Хамелеон ромбы",
+    width: "",
+    length: "5 м",
+    price: 200
+},
+{
+    id: "beads-chameleon-drops",
+    category: "Бусы — хамелеон",
+    name: "Хамелеон капли",
+    width: "",
+    length: "5 м",
+    price: 200
+}
+
+];
 
 
-<div class="category" onclick="openAtlas()">
-🎀 Атласные ленты
+/* =========================
+   КОРЗИНА
+========================= */
+
+let cart = [];
+
+
+/* =========================
+   ГЛАВНАЯ
+========================= */
+
+function home() {
+
+document.getElementById("app").innerHTML = `
+
+<h1>🛍 ДОФАМИН<br>всё для декора</h1>
+
+<div class="card category" onclick="showCategories('ribbons')">
+🎀 Ленты
 </div>
 
-
-<div class="category">
-🧵 Тканевые ленты
+<div class="card category" onclick="showCategories('beads')">
+📿 Бусы
 </div>
 
-
-<div class="category">
-🌊 Органза «Волна»
+<div class="card category cart-button" onclick="showCart()">
+🛒 Корзина
+${cart.length ? " • " + cart.length : ""}
 </div>
-
-
-<div class="category">
-✨ Ленты со стразами
-</div>
-
 
 `;
 
 }
 
 
+/* =========================
+   КАТЕГОРИИ
+========================= */
 
-function openAtlas() {
+function showCategories(type) {
 
-document.body.innerHTML = `
+let categories = [];
 
-<h1>🎀 Атласные ленты</h1>
+if (type === "ribbons") {
+
+categories = [
+"Атласные ленты",
+"Органза «Волна»",
+"Органза 1 см",
+"Лента «Волна» тканевая 37 м",
+"Органза «Волна» хамелеон 45 м",
+"Органза «Волна» хамелеон 9 м",
+"Лента со стразами",
+"Лента в горошек",
+"Шифоновая лента",
+"Ленты с точками",
+"Лента тканевая «Волна» 9 м",
+"Ленты с рисунком",
+"Кружево",
+"Лента цветочная"
+];
+
+} else {
+
+categories = [
+"Бусы — прозрачные",
+"Бусы — хамелеон"
+];
+
+}
 
 
-<div class="product">
-🎀 Голубая атласная лента<br>
-Ширина: 1 см<br>
-Длина: 320 м<br>
-Цена: скоро добавим
+let html = `
+
+<button class="back-button" onclick="home()">🏠 Витрина</button>
+
+<h1>${type === "ribbons" ? "🎀 Ленты" : "📿 Бусы"}</h1>
+
+`;
+
+categories.forEach(category => {
+
+html += `
+
+<div class="card category"
+onclick="showProducts('${escapeQuotes(category)}')">
+
+${category}
+
 </div>
 
+`;
 
-<div class="product">
-🎀 Серая атласная лента<br>
-Ширина: 1 см<br>
-Длина: 320 м<br>
-Цена: скоро добавим
+});
+
+html += `
+
+<div class="card cart-button" onclick="showCart()">
+🛒 Корзина
 </div>
 
+`;
 
-<div class="product">
-🎀 Золотая атласная лента<br>
-Ширина: 1 см<br>
-Длина: 320 м<br>
-Цена: скоро добавим
+document.getElementById("app").innerHTML = html;
+
+}
+
+
+/* =========================
+   ТОВАРЫ КАТЕГОРИИ
+========================= */
+
+function showProducts(category) {
+
+let items = products.filter(p => p.category === category);
+
+let html = `
+
+<button class="back-button"
+onclick="${category.includes("Бусы") ? "showCategories('beads')" : "showCategories('ribbons')}" >
+⬅️ Назад
+</button>
+
+<button onclick="home()">🏠 Витрина</button>
+
+<h2>${category}</h2>
+
+`;
+
+items.forEach(item => {
+
+html += productCard(item);
+
+});
+
+html += `
+
+<div class="card cart-button" onclick="showCart()">
+🛒 Открыть корзину
 </div>
 
+`;
 
-<div class="product">
-🎀 Кремовая атласная лента<br>
-Ширина: 1 см<br>
-Длина: 320 м<br>
-Цена: скоро добавим
+document.getElementById("app").innerHTML = html;
+
+}
+
+
+/* =========================
+   КАРТОЧКА ТОВАРА
+========================= */
+
+function productCard(item) {
+
+let priceText = item.price > 0
+? item.price + " ₽ / бобина"
+: "Цена скоро добавим";
+
+return `
+
+<div class="card product">
+
+<div class="photo">
+📷<br>
+Фото товара
 </div>
 
-
-<div class="product">
-🎀 Розовая атласная лента<br>
-Ширина: 1 см<br>
-Длина: 320 м<br>
-Цена: скоро добавим
+<div class="product-name">
+${item.name}
 </div>
 
+<div class="info">
 
-<div class="product">
-🎀 Белая атласная лента<br>
-Ширина: 1 см<br>
-Длина: 320 м<br>
-Цена: скоро добавим
+${item.width ? "📏 Ширина: " + item.width + "<br>" : ""}
+
+📦 Длина: ${item.length}
+
 </div>
 
-
-<div class="product">
-🎀 Черная атласная лента<br>
-Ширина: 1 см<br>
-Длина: 320 м<br>
-Цена: скоро добавим
+<div class="price">
+💰 ${priceText}
 </div>
 
+<button onclick="addToCart('${item.id}')">
+➕ Добавить в корзину
+</button>
 
-<div class="product">
-🎀 Бордовая атласная лента<br>
-Ширина: 1 см<br>
-Длина: 320 м<br>
-Цена: скоро добавим
 </div>
-
 
 `;
 
 }
+
+
+/* =========================
+   ДОБАВИТЬ В КОРЗИНУ
+========================= */
+
+function addToCart(id) {
+
+let item = products.find(p => p.id === id);
+
+if (!item) return;
+
+let existing = cart.find(p => p.id === id);
+
+if (existing) {
+
+existing.quantity++;
+
+} else {
+
+cart.push({
+    id: item.id,
+    name: item.name,
+    price: item.price,
+    quantity: 1
+});
+
+}
+
+alert("🛒 Товар добавлен в корзину");
+
+}
+
+
+/* =========================
+   КОРЗИНА
+========================= */
+
+function showCart() {
+
+let html = `
+
+<button class="back-button" onclick="home()">
+⬅️ Витрина
+</button>
+
+<h1>🛒 Корзина</h1>
+
+`;
+
+if (cart.length === 0) {
+
+html += `
+
+<div class="card empty">
+
+🛒 Корзина пока пустая
+
+<br><br>
+
+Добавьте товары из каталога.
+
+</div>
+
+`;
+
+document.getElementById("app").innerHTML = html;
+
+return;
+
+}
+
+let total = 0;
+
+cart.forEach(item => {
+
+let sum = item.price * item.quantity;
+
+total += sum;
+
+html += `
+
+<div class="card">
+
+<div class="product-name">
+${item.name}
+</div>
+
+<div class="price">
+${item.price} ₽ × ${item.quantity}
+=
+${sum} ₽
+</div>
+
+<div class="quantity">
+
+<button onclick="changeQuantity('${item.id}', -1)">
+−
+</button>
+
+<strong>${item.quantity}</strong>
+
+<button onclick="changeQuantity('${item.id}', 1)">
++
+</button>
+
+<button onclick="removeFromCart('${item.id}')">
+🗑
+</button>
+
+</div>
+
+</div>
+
+`;
+
+});
+
+html += `
+
+<div class="card">
+
+<div class="total">
+Итого: ${total} ₽
+</div>
+
+<button onclick="checkout()">
+✅ Оформить заказ
+</button>
+
+</div>
+
+`;
+
+document.getElementById("app").innerHTML = html;
+
+}
+
+
+/* =========================
+   КОЛИЧЕСТВО
+========================= */
+
+function changeQuantity(id, change) {
+
+let item = cart.find(p => p.id === id);
+
+if (!item) return;
+
+item.quantity += change;
+
+if (item.quantity <= 0) {
+
+cart = cart.filter(p => p.id !== id);
+
+}
+
+showCart();
+
+}
+
+
+/* =========================
+   УДАЛЕНИЕ
+========================= */
+
+function removeFromCart(id) {
+
+cart = cart.filter(p => p.id !== id);
+
+showCart();
+
+}
+
+
+/* =========================
+   ОФОРМЛЕНИЕ
+========================= */
+
+function checkout() {
+
+if (cart.length === 0) {
+
+alert("Корзина пустая");
+
+return;
+
+}
+
+alert(
+"Заказ собран!\\n\\n" +
+"Следующим этапом подключим отправку заказа тебе в Telegram."
+);
+
+}
+
+
+/* =========================
+   ЭКРАНИРОВАНИЕ
+========================= */
+
+function escapeQuotes(text) {
+
+return text
+.replace(/\\/g, "\\\\")
+.replace(/'/g, "\\'");
+
+}
+
+
+/* =========================
+   СТАРТ
+========================= */
+
+home();
 
 </script>
-
 
 </body>
 </html>
