@@ -44,7 +44,7 @@ async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
 async def catalog(update: Update, context: ContextTypes.DEFAULT_TYPE):
     keyboard = [
-        ["🎀 Ленты", "📿 Бусы"],
+        ["Витрина"],
         ["🔙 Назад"]
     ]
 
