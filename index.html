@@ -2,12 +2,512 @@
 <html lang="ru">
 <head>
 <meta charset="UTF-8">
-<title>Тест</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>ДОФАМИН — всё для декора</title>
+
+<style>
+* {
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background: #fff7fb;
+    margin: 0;
+    padding: 16px;
+    color: #333;
+}
+
+h1, h2 {
+    text-align: center;
+}
+
+.card {
+    background: white;
+    padding: 18px;
+    margin: 12px 0;
+    border-radius: 20px;
+    box-shadow: 0 3px 12px rgba(0,0,0,0.08);
+}
+
+.category {
+    font-size: 20px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+button {
+    background: #ff7aa8;
+    color: white;
+    border: none;
+    padding: 12px 18px;
+    border-radius: 20px;
+    font-size: 16px;
+    margin: 5px;
+}
+
+.back {
+    background: #777;
+}
+
+.cart {
+    background: #333;
+}
+
+.price {
+    color: #d65386;
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.photo {
+    height: 150px;
+    background: #f5f5f5;
+    border-radius: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #aaa;
+    margin-bottom: 15px;
+}
+
+</style>
 </head>
 
 <body>
 
-<h1>ТЕСТ МАГАЗИНА</h1>
+<div id="app"></div>
 
-</body>
-</html>
+
+<script>
+
+const products = [
+
+{
+id:1,
+category:"Атласные ленты",
+name:"Голубая атласная лента",
+info:"1 см • 320 м",
+price:0
+},
+
+{
+id:2,
+category:"Атласные ленты",
+name:"Белая атласная лента",
+info:"1 см • 320 м",
+price:0
+},
+
+{
+id:3,
+category:"Органза «Волна»",
+name:"Белая",
+info:"3,5 см • 27 м",
+price:250
+},
+
+{
+id:4,
+category:"Органза «Волна»",
+name:"Пудровая (персиковая)",
+info:"3,5 см • 27 м",
+price:250
+},
+
+{
+id:5,
+category:"Бусы",
+name:"Прозрачные кружочки",
+info:"5 метров",
+price:170
+}
+
+];
+
+
+let cart=[];
+
+
+function home(){
+
+document.getElementById("app").innerHTML=`
+
+<h1>
+🛍 ДОФАМИН<br>
+всё для декора
+</h1>
+
+
+<div class="card category" onclick="categories('Ленты')">
+🎀 Ленты
+</div>
+
+
+<div class="card category" onclick="productsPage('Бусы')">
+📿 Бусы
+</div>
+
+
+<div class="card cart" onclick="showCart()">
+🛒 Корзина (${cart.length})
+</div>
+
+`;
+
+}
+
+
+
+function categories(type){
+
+let html=`
+
+<button class="back" onclick="home()">
+⬅ Назад
+</button>
+
+<h2>🎀 Ленты</h2>
+
+`;
+
+
+let cats=[
+"Атласные ленты",
+"Органза «Волна»"
+];
+
+
+cats.forEach(c=>{
+
+html+=`
+
+<div class="card category"
+onclick="productsPage('${c}')">
+
+${c}
+
+</div>
+
+`;
+
+});
+
+
+document.getElementById("app").innerHTML=html;
+
+}
+
+
+function productsPage(category){
+
+let html=`
+
+<button class="back" onclick="home()">
+⬅ Назад
+</button>
+
+<h2>${category}</h2>
+
+`;
+
+
+products
+.filter(p=>p.category===category)
+.forEach(p=>{
+
+html+=`
+
+<div class="card">
+
+<div class="photo">
+📷 Фото товара
+</div>
+
+
+<h3>${p.name}</h3>
+
+<p>${p.info}</p>
+
+
+<div class="price">
+
+${p.price ? p.price+" ₽" : "Цена уточняется"}
+
+</div>
+
+
+<button onclick="add(${p.id})">
+➕ В корзину
+</button>
+
+
+</div>
+
+`;
+
+});
+
+
+document.getElementById("app").innerHTML=html;
+
+}
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>ДОФАМИН — всё для декора</title>
+
+<style>
+* {
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background: #fff7fb;
+    margin: 0;
+    padding: 16px;
+    color: #333;
+}
+
+h1, h2 {
+    text-align: center;
+}
+
+.card {
+    background: white;
+    padding: 18px;
+    margin: 12px 0;
+    border-radius: 20px;
+    box-shadow: 0 3px 12px rgba(0,0,0,0.08);
+}
+
+.category {
+    font-size: 20px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+button {
+    background: #ff7aa8;
+    color: white;
+    border: none;
+    padding: 12px 18px;
+    border-radius: 20px;
+    font-size: 16px;
+    margin: 5px;
+}
+
+.back {
+    background: #777;
+}
+
+.cart {
+    background: #333;
+}
+
+.price {
+    color: #d65386;
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.photo {
+    height: 150px;
+    background: #f5f5f5;
+    border-radius: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #aaa;
+    margin-bottom: 15px;
+}
+
+</style>
+</head>
+
+<body>
+
+<div id="app"></div>
+
+
+<script>
+
+const products = [
+
+{
+id:1,
+category:"Атласные ленты",
+name:"Голубая атласная лента",
+info:"1 см • 320 м",
+price:0
+},
+
+{
+id:2,
+category:"Атласные ленты",
+name:"Белая атласная лента",
+info:"1 см • 320 м",
+price:0
+},
+
+{
+id:3,
+category:"Органза «Волна»",
+name:"Белая",
+info:"3,5 см • 27 м",
+price:250
+},
+
+{
+id:4,
+category:"Органза «Волна»",
+name:"Пудровая (персиковая)",
+info:"3,5 см • 27 м",
+price:250
+},
+
+{
+id:5,
+category:"Бусы",
+name:"Прозрачные кружочки",
+info:"5 метров",
+price:170
+}
+
+];
+
+
+let cart=[];
+
+
+function home(){
+
+document.getElementById("app").innerHTML=`
+
+<h1>
+🛍 ДОФАМИН<br>
+всё для декора
+</h1>
+
+
+<div class="card category" onclick="categories('Ленты')">
+🎀 Ленты
+</div>
+
+
+<div class="card category" onclick="productsPage('Бусы')">
+📿 Бусы
+</div>
+
+
+<div class="card cart" onclick="showCart()">
+🛒 Корзина (${cart.length})
+</div>
+
+`;
+
+}
+
+
+
+function categories(type){
+
+let html=`
+
+<button class="back" onclick="home()">
+⬅ Назад
+</button>
+
+<h2>🎀 Ленты</h2>
+
+`;
+
+
+let cats=[
+"Атласные ленты",
+"Органза «Волна»"
+];
+
+
+cats.forEach(c=>{
+
+html+=`
+
+<div class="card category"
+onclick="productsPage('${c}')">
+
+${c}
+
+</div>
+
+`;
+
+});
+
+
+document.getElementById("app").innerHTML=html;
+
+}
+
+
+function productsPage(category){
+
+let html=`
+
+<button class="back" onclick="home()">
+⬅ Назад
+</button>
+
+<h2>${category}</h2>
+
+`;
+
+
+products
+.filter(p=>p.category===category)
+.forEach(p=>{
+
+html+=`
+
+<div class="card">
+
+<div class="photo">
+📷 Фото товара
+</div>
+
+
+<h3>${p.name}</h3>
+
+<p>${p.info}</p>
+
+
+<div class="price">
+
+${p.price ? p.price+" ₽" : "Цена уточняется"}
+
+</div>
+
+
+<button onclick="add(${p.id})">
+➕ В корзину
+</button>
+
+
+</div>
+
+`;
+
+});
+
+
+document.getElementById("app").innerHTML=html;
+
+}
+
+
+
