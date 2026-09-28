@@ -18,20 +18,17 @@ h1 {
     text-align: center;
 }
 
-.category {
+.category, .product {
     background: white;
-    padding: 20px;
+    padding: 18px;
     margin: 15px 0;
     border-radius: 20px;
-    font-size: 22px;
+    font-size: 18px;
     box-shadow: 0 3px 10px rgba(0,0,0,0.08);
 }
 
-.product {
-    background: white;
-    padding: 15px;
-    margin-top: 15px;
-    border-radius: 15px;
+.category {
+    font-size: 22px;
 }
 
 button {
@@ -48,22 +45,11 @@ button {
 
 <body>
 
-<h1>🛍ДОФАМИН - всё для декора</h1>
+<h1>🛍 ДОФАМИН<br>всё для декора</h1>
+
 
 <div class="category" onclick="openRibbons()">
 🎀 Ленты
-</div>
-
-<div class="product">
-🧵 Тканевые ленты<br>
-Цвета: белый, розовый, голубой<br>
-Цена: скоро добавим
-</div>
-
-<div class="product">
-🌊 Органза «Волна»<br>
-Цвета: разные<br>
-Цена: скоро добавим
 </div>
 
 
@@ -71,50 +57,126 @@ button {
 📿 Бусы
 </div>
 
+
 <div class="product">
 📿 Декоративные бусы<br>
 Разные виды и цвета
 </div>
-    <div class="product" onclick="openAtlas()">
-🎀 Атласные ленты<br>
-Разные цвета • 1 см • 320 м
-</div>
+
+
+
 <script>
+
 function openRibbons() {
-    document.body.innerHTML = `
-    <h1> Ленты</h1>
 
-    <div class="category">
-    Тканевые ленты
-    </div>
+document.body.innerHTML = `
 
-    <div class="category">
-    Органза волна
-    </div>
+<h1>🎀 Ленты</h1>
 
-    <div class="category">
-    Ленты со стразами
-    </div>
 
-    <div class="category">
-    Атласные ленты
-    </div>
+<div class="category" onclick="openAtlas()">
+🎀 Атласные ленты
+</div>
 
-    <div class="category">
-    Шифоновые ленты
-    </div>
 
-    <div class="category">
-    Ленты с точками и горошек
-    </div>
+<div class="category">
+🧵 Тканевые ленты
+</div>
 
-    <div class="category">
-    Кружевные ленты
-    </div>
 
-    <div class="category">
-    Ленты с рисунком
-    </div>
-    `;
+<div class="category">
+🌊 Органза «Волна»
+</div>
+
+
+<div class="category">
+✨ Ленты со стразами
+</div>
+
+
+`;
+
 }
+
+
+
+function openAtlas() {
+
+document.body.innerHTML = `
+
+<h1>🎀 Атласные ленты</h1>
+
+
+<div class="product">
+🎀 Голубая атласная лента<br>
+Ширина: 1 см<br>
+Длина: 320 м<br>
+Цена: скоро добавим
+</div>
+
+
+<div class="product">
+🎀 Серая атласная лента<br>
+Ширина: 1 см<br>
+Длина: 320 м<br>
+Цена: скоро добавим
+</div>
+
+
+<div class="product">
+🎀 Золотая атласная лента<br>
+Ширина: 1 см<br>
+Длина: 320 м<br>
+Цена: скоро добавим
+</div>
+
+
+<div class="product">
+🎀 Кремовая атласная лента<br>
+Ширина: 1 см<br>
+Длина: 320 м<br>
+Цена: скоро добавим
+</div>
+
+
+<div class="product">
+🎀 Розовая атласная лента<br>
+Ширина: 1 см<br>
+Длина: 320 м<br>
+Цена: скоро добавим
+</div>
+
+
+<div class="product">
+🎀 Белая атласная лента<br>
+Ширина: 1 см<br>
+Длина: 320 м<br>
+Цена: скоро добавим
+</div>
+
+
+<div class="product">
+🎀 Черная атласная лента<br>
+Ширина: 1 см<br>
+Длина: 320 м<br>
+Цена: скоро добавим
+</div>
+
+
+<div class="product">
+🎀 Бордовая атласная лента<br>
+Ширина: 1 см<br>
+Длина: 320 м<br>
+Цена: скоро добавим
+</div>
+
+
+`;
+
+}
+
 </script>
+
+
+</body>
+</html>
