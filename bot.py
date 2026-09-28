@@ -25,8 +25,11 @@ def run_web_server():
 
 async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
     keyboard = [
-        ["✅Открыть витрину"]
-    ]
+    [KeyboardButton(
+        "✅Открыть витрину",
+        web_app=WebAppInfo(url="https://telegram-shop-1-h502.onrender.com")
+    )]
+]
 
     reply_markup = ReplyKeyboardMarkup(
         keyboard,
