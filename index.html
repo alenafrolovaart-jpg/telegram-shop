@@ -86,53 +86,52 @@ document.getElementById("app").innerHTML = `
 
 <h1>🎀 Ленты</h1>
 
-
-<div class="card">
-Атласные ленты
+<div class="card" onclick="openProduct('Атласная лента')">
+🎀 Атласная лента
 </div>
 
-<div class="card">
-Органза «Волна»
+<div class="card" onclick="openProduct('Органза Волна')">
+🌊 Органза «Волна»
 </div>
 
-<div class="card">
-Органза 1 см
+<div class="card" onclick="openProduct('Органза')">
+🎀 Органза
 </div>
 
-<div class="card">
-Лента тканевая «Волна»
+<div class="card" onclick="openProduct('Лента тканевая Волна')">
+🎀 Лента тканевая «Волна»
 </div>
 
-<div class="card">
-Органза «Волна» хамелеон
+<div class="card" onclick="openProduct('Органза Волна хамелеон')">
+✨ Органза «Волна» хамелеон
 </div>
 
-<div class="card">
-Ленты со стразами
+<div class="card" onclick="openProduct('Лента со стразами')">
+💎 Лента со стразами
 </div>
 
-<div class="card">
-Лента в горошек
+<div class="card" onclick="openProduct('Лента в горошек')">
+⚪ Лента в горошек
 </div>
 
-<div class="card">
-Шифоновая лента
+<div class="card" onclick="openProduct('Шифоновая лента')">
+🎀 Шифоновая лента
 </div>
 
-<div class="card">
-Ленты с точками
+<div class="card" onclick="openProduct('Лента с точками')">
+🔘 Лента с точками
 </div>
 
-<div class="card">
-Ленты с рисунком
+<div class="card" onclick="openProduct('Лента с рисунком')">
+🌸 Лента с рисунком
 </div>
 
-<div class="card">
-Кружево
+<div class="card" onclick="openProduct('Кружевная лента')">
+🤍 Кружевная лента
 </div>
 
-<div class="card">
-Лента цветочная
+<div class="card" onclick="openProduct('Лента цветочная')">
+🌺 Лента цветочная
 </div>
 
 `;
@@ -169,6 +168,9 @@ document.getElementById("app").innerHTML = `
 home();
 
 
+function openProduct(name) {
+    alert("Вы выбрали: " + name);
+}
 </script>
 
 </body>
