@@ -169,7 +169,33 @@ home();
 
 
 function openProduct(name) {
-    alert("Вы выбрали: " + name);
+
+document.getElementById("app").innerHTML = `
+
+<button onclick="ribbons()">
+⬅ Назад
+</button>
+
+<h1>🎀 ${name}</h1>
+
+<div class="card">
+Цвет: выбрать
+</div>
+
+<div class="card">
+Метраж: выбрать
+</div>
+
+<div class="card">
+Цена: уточняется
+</div>
+
+<button onclick="alert('Товар добавлен в корзину')">
+🛒 Добавить в корзину
+</button>
+
+`;
+
 }
 </script>
 
